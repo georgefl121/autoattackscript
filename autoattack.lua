@@ -1,7 +1,8 @@
 -- UI library is made by wally
 local player = game.Players.LocalPlayer
 LocalPlayer = game.Players.LocalPlayer
-
+local XPoint = workspace.CurrentCamera.ViewportSize.X / 2
+local YPoint = workspace.CurrentCamera.ViewportSize.Y / 2
 Players = game:GetService("Players")
 RunService = game:GetService("RunService")
 
@@ -82,13 +83,23 @@ LeftGroupBox:AddLabel('made by georgefl#5105')
 
 local Gunslinger = Tabs.Main:AddLeftTabbox('hello')
 local Bunny = Tabs.Main:AddLeftTabbox('hello') 
+local Archer = Tabs.Main:AddRightTabbox('hello') 
+local Dancer = Tabs.Main:AddRightTabbox('hello') 
+
 local Gun1 = Gunslinger:AddTab('Gunslinger')
 local Gun2 = Gunslinger:AddTab('Settings')
+
 local Bun1 = Bunny:AddTab('Bunny')
 local Bun2 = Bunny:AddTab('Settings')
 
+local Arch1 = Archer:AddTab('Archer')
+local Arch2 = Archer:AddTab('Settings')
+
+local Danc1 = Dancer:AddTab('Dancer')
+local Danc2 = Dancer:AddTab('Settings')
 
 local GunEnable = Gun1:AddButton('Enable', function()
+    GunENE = true
     spawn(function()
         while GunENE do
             if GunENE and GunLMBE then
@@ -98,8 +109,8 @@ local GunEnable = Gun1:AddButton('Enable', function()
                             hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
                             stare(v)
                             local VirtualInputManager = game:GetService("VirtualInputManager")
-                            VirtualInputManager:SendMouseButtonEvent(620, 662, 0, true, game, 0)
-                            VirtualInputManager:SendMouseButtonEvent(620, 662, 0, false, game, 0)
+                            VirtualInputManager:SendMouseButtonEvent(XPoint, YPoint, 0, true, game, 0)
+                            VirtualInputManager:SendMouseButtonEvent(XPoint, YPoint, 0, false, game, 0)
                             wait()
                         end
                     end
@@ -171,19 +182,11 @@ local GunEnable = Gun1:AddButton('Enable', function()
 
 end)
 
-
-
-GunEnable:AddTooltip('Activates gunslinger auto attack')
-
-Gun1:AddToggle('GunEn', {
-    Text = 'Enable',
-    Default = true, -- Default value (true / false)
-    Tooltip = 'disabling this will cause the auto attack to stop', -- Information shown when you hover over the toggle
-})
-
-Toggles.GunEn:OnChanged(function()
-    GunENE = Toggles.GunEn.Value
+local GunDisable = GunEnable:AddButton('Disable', function()
+    GunENE = false
 end)
+GunEnable:AddTooltip('Activates gunslinger auto attack')
+GunDisable:AddTooltip('Deactivates gunslinger auto attack')
 
 Gun1:AddToggle('GunLMB', {
     Text = 'Auto LMB',
@@ -283,6 +286,7 @@ end)
 
 local BunEnable = Bun1:AddButton('Enable', function()
     spawn(function()
+        BunENE = true
         while BunENE do
             if BunENE and BunLMBE then
                 for i,v in pairs(game.Players:GetPlayers()) do
@@ -291,8 +295,8 @@ local BunEnable = Bun1:AddButton('Enable', function()
                             hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
                             h(v)
                             local VirtualInputManager = game:GetService("VirtualInputManager")
-                            VirtualInputManager:SendMouseButtonEvent(620, 662, 0, true, game, 0)
-                            VirtualInputManager:SendMouseButtonEvent(620, 662, 0, false, game, 0)
+                            VirtualInputManager:SendMouseButtonEvent(XPoint, YPoint, 0, true, game, 0)
+                            VirtualInputManager:SendMouseButtonEvent(XPoint, YPoint, 0, false, game, 0)
                             wait()
                         end
                     end
@@ -361,22 +365,17 @@ local BunEnable = Bun1:AddButton('Enable', function()
             wait()
         end
     end)
-
 end)
 
 
 
 BunEnable:AddTooltip('Activates Bunny auto attack')
 
-Bun1:AddToggle('BunEn', {
-    Text = 'Enable',
-    Default = true, -- Default value (true / false)
-    Tooltip = 'disabling this will cause the auto attack to stop', -- Information shown when you hover over the toggle
-})
-
-Toggles.BunEn:OnChanged(function()
-    BunENE = Toggles.BunEn.Value
+local BunDisable = BunEnable:AddButton('Disable', function()
+    BunENE = false
 end)
+
+BunDisable:AddTooltip('Deactivates bunny auto attack')
 
 Bun1:AddToggle('BunLMB', {
     Text = 'Auto LMB',
@@ -473,6 +472,454 @@ Bun2:AddSlider('BunFS', {
 Options.BunFS:OnChanged(function()
     BunFSR = Options.BunFS.Value
 end)
+
+local ArchEnable = Arch1:AddButton('Enable', function()
+    ArchENE = true
+    spawn(function()
+        while ArchENE do
+            if ArchENE and ArchLMBE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(ArchLMBR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            stare(v)
+                            local VirtualInputManager = game:GetService("VirtualInputManager")
+                            VirtualInputManager:SendMouseButtonEvent(XPoint, YPoint, 0, true, game, 0)
+                            wait(tonumber(ArchLMBW))
+                            VirtualInputManager:SendMouseButtonEvent(XPoint, YPoint, 0, false, game, 0)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function()
+        while ArchENE do
+            if ArchQE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(ArchQSR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            stare(v)
+                            keypress(0x51) --Q
+                            keyrelease(0x51)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function()
+        while ArchENE do
+            if ArchEE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(ArchESR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            stare(v)
+                            keypress(0x45) --E
+                            keyrelease(0x45)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function()
+        while ArchENE do
+            if ArchFE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(ArchFSR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            stare(v)
+                            local crit = game.Workspace[LocalPlayer.name].Stats.Critical
+                            if crit.Value == 100 then
+                                keypress(0x46)
+                            end
+                            keyrelease(0x46)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+end)
+
+local ArchDisable = ArchEnable:AddButton('Disable', function()
+    ArchENE = false
+end)
+ArchEnable:AddTooltip('Activates Archer auto attack')
+ArchDisable:AddTooltip('Deactivates Archer auto attack')
+
+-- Arch1:AddToggle('ArchEn', {
+--     Text = 'Enable',
+--     Default = true, -- Default value (true / false)
+--     Tooltip = 'disabling this will cause the auto attack to stop', -- Information shown when you hover over the toggle
+-- })
+
+-- Toggles.ArchEn:OnChanged(function()
+--     ArchENE = Toggles.ArchEn.Value
+-- end)
+
+Arch1:AddToggle('ArchLMB', {
+    Text = 'Auto LMB',
+    Default = true, -- Default value (true / false)
+    Tooltip = 'Automatically uses LMB', -- Information shown when you hover over the toggle
+})
+
+Toggles.ArchLMB:OnChanged(function()
+    ArchLMBE = Toggles.ArchLMB.Value
+end)
+
+Arch1:AddToggle('ArchQ', {
+    Text = 'Auto Q',
+    Default = true, -- Default value (true / false)
+    Tooltip = 'Automatically uses Q skill', -- Information shown when you hover over the toggle
+})
+
+Toggles.ArchQ:OnChanged(function()
+    ArchQE = Toggles.ArchQ.Value
+end)
+
+Arch1:AddToggle('ArchE', {
+    Text = 'Auto E',
+    Default = false, -- Default value (true / false)
+    Tooltip = 'aim it yourself', -- Information shown when you hover over the toggle
+})
+
+Toggles.ArchE:OnChanged(function()
+    ArchEE = Toggles.ArchE.Value
+end)
+
+Arch1:AddToggle('ArchF', {
+    Text = 'Auto F',
+    Default = true, -- Default value (true / false)
+    Tooltip = 'Automatically uses F skill', -- Information shown when you hover over the toggle
+})
+
+Toggles.ArchF:OnChanged(function()
+    ArchFE = Toggles.ArchF.Value
+end)
+
+Arch2:AddSlider('ArchLMBW', {
+    Text = 'LMB Charge',
+    Default = 1.1,
+    Min = 0,
+    Max = 1.1,
+    Rounding = 5,
+
+    Compact = false, -- If set to true, then it will hide the label
+})
+
+Options.ArchLMBW:OnChanged(function()
+    ArchLMBW = Options.ArchLMBW.Value
+end)
+
+Arch2:AddSlider('ArchLMBS', {
+    Text = 'LMB range',
+    Default = 25,
+    Min = 1,
+    Max = 32,
+    Rounding = 0,
+
+    Compact = false, -- If set to true, then it will hide the label
+})
+
+
+
+
+Options.ArchLMBS:OnChanged(function()
+    ArchLMBR = Options.ArchLMBS.Value
+end)
+
+Arch2:AddSlider('ArchQS', {
+    Text = 'Q skill range',
+    Default = 8,
+    Min = 1,
+    Max = 8,
+    Rounding = 1,
+
+    Compact = false, -- If set to true, then it will hide the label
+})
+
+Options.ArchQS:OnChanged(function()
+    ArchQSR = Options.ArchQS.Value
+end)
+
+Arch2:AddSlider('ArchES', {
+    Text = 'E skill range',
+    Default = 0,
+    Min = 0,
+    Max = 20,
+    Rounding = 0,
+
+    Compact = false, -- If set to true, then it will hide the label
+})
+
+Options.ArchES:OnChanged(function()
+    ArchESR = Options.ArchES.Value
+end)
+
+Arch2:AddSlider('ArchFS', {
+    Text = 'F skill range',
+    Default = 25,
+    Min = 1,
+    Max = 100,
+    Rounding = 1,
+
+    Compact = false, 
+})
+
+Options.ArchFS:OnChanged(function()
+    ArchFSR = Options.ArchFS.Value
+end)
+
+local DancEnable = Danc1:AddButton('Enable', function()
+    DancENE = true
+    spawn(function()
+        while DancENE do
+            if DancENE and DancLMBE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(DancLMBR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            h(v)
+                            local VirtualInputManager = game:GetService("VirtualInputManager")
+                            VirtualInputManager:SendMouseButtonEvent(XPoint, YPoint, 0, true, game, 0)
+                            VirtualInputManager:SendMouseButtonEvent(XPoint, YPoint, 0, false, game, 0)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function()
+        while DancENE do
+            if DancQE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(DancQSR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            h(v)
+                            keypress(0x51) --Q
+                            keyrelease(0x51)
+                            Following = true
+                            wait(2)
+                            Following = false
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function()
+        while DancFollowE do
+            if Following then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(DancFollowSR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            h(v)
+                            local hum = game.Players.LocalPlayer.Character.Humanoid
+                            enrp = v.Character.HumanoidRootPart
+                            hum:MoveTo(enrp.Position)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function()
+        while DancENE do
+            if DancEE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(DancESR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            h(v)
+                            keypress(0x45) --E
+                            keyrelease(0x45)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function()
+        while DancENE do
+            if DancFE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(DancFSR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            h(v)
+                            local crit = game.Workspace[LocalPlayer.name].Stats.Critical
+                            if crit.Value == 100 then
+                                keypress(0x46)
+                            end
+                            keyrelease(0x46)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+end)
+
+local DancDisable = DancEnable:AddButton('Disable', function()
+    DancENE = false
+end)
+DancEnable:AddTooltip('Activates Dancer auto attack')
+DancDisable:AddTooltip('Deactivates Dancer auto attack')
+
+Danc1:AddToggle('DancLMB', {
+    Text = 'Auto LMB',
+    Default = true, -- Default value (true / false)
+    Tooltip = 'Automatically uses LMB', -- Information shown when you hover over the toggle
+})
+
+Toggles.DancLMB:OnChanged(function()
+    DancLMBE = Toggles.DancLMB.Value
+end)
+
+Danc1:AddToggle('DancQ', {
+    Text = 'Auto Q',
+    Default = true, -- Default value (true / false)
+    Tooltip = 'Automatically uses Q skill', -- Information shown when you hover over the toggle
+})
+
+Toggles.DancQ:OnChanged(function()
+    DancQE = Toggles.DancQ.Value
+end)
+
+Danc1:AddToggle('DancE', {
+    Text = 'Auto E',
+    Default = true, -- Default value (true / false)
+    Tooltip = 'Automatically uses E skill', -- Information shown when you hover over the toggle
+})
+
+Toggles.DancE:OnChanged(function()
+    DancEE = Toggles.DancE.Value
+end)
+
+Danc1:AddToggle('DancF', {
+    Text = 'Auto F',
+    Default = true, -- Default value (true / false)
+    Tooltip = 'Automatically uses F skill', -- Information shown when you hover over the toggle
+})
+
+Toggles.DancF:OnChanged(function()
+    DancFE = Toggles.DancF.Value
+end)
+
+Danc1:AddToggle('DancFollow', {
+    Text = 'Follow',
+    Default = true, -- Default value (true / false)
+    Tooltip = 'Follows the nearest player and attacks', -- Information shown when you hover over the toggle
+})
+
+Toggles.DancFollow:OnChanged(function()
+    DancFollowE = Toggles.DancFollow.Value
+end)
+
+Danc2:AddSlider('DancLMBS', {
+    Text = 'LMB range',
+    Default = 5,
+    Min = 1,
+    Max = 9,
+    Rounding = 0,
+
+    Compact = false, -- If set to true, then it will hide the label
+})
+
+Options.DancLMBS:OnChanged(function()
+    DancLMBR = Options.DancLMBS.Value
+end)
+
+Danc2:AddSlider('DancQS', {
+    Text = 'Q skill range',
+    Default = 30,
+    Min = 1,
+    Max = 50,
+    Rounding = 0,
+
+    Compact = false, -- If set to true, then it will hide the label
+})
+
+Options.DancQS:OnChanged(function()
+    DancQSR = Options.DancQS.Value
+end)
+
+Danc2:AddSlider('DancES', {
+    Text = 'E skill range',
+    Default = 5,
+    Min = 1,
+    Max = 9,
+    Rounding = 0,
+
+    Compact = false, -- If set to true, then it will hide the label
+})
+
+Options.DancES:OnChanged(function()
+    DancESR = Options.DancES.Value
+end)
+
+Danc2:AddSlider('DancFS', {
+    Text = 'F skill range',
+    Default = 20,
+    Min = 1,
+    Max = 20,
+    Rounding = 0,
+
+    Compact = false, 
+})
+
+Options.DancFS:OnChanged(function()
+    DancFSR = Options.DancFS.Value
+end)
+
+Danc2:AddSlider('DancFollowS', {
+    Text = 'Follow range',
+    Default = 25,
+    Min = 1,
+    Max = 50,
+    Rounding = 0,
+
+    Compact = false, 
+})
+
+Options.DancFollowS:OnChanged(function()
+    DancFollowSR = Options.DancFollowS.Value
+end)
+
 
 -- UI Settings
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('Menu')
