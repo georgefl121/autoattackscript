@@ -71,6 +71,7 @@ local Window = Library:CreateWindow({
 
 local Tabs = {
     Main = Window:AddTab('Page 1'), 
+    Main2 = Window:AddTab('Page 2'), 
     ['UI Settings'] = Window:AddTab('UI Settings'),
     Stuff = Window:AddTab('Credits'), 
 }
@@ -85,6 +86,8 @@ local Gunslinger = Tabs.Main:AddLeftTabbox('hello')
 local Bunny = Tabs.Main:AddLeftTabbox('hello') 
 local Archer = Tabs.Main:AddRightTabbox('hello') 
 local Dancer = Tabs.Main:AddRightTabbox('hello') 
+local Demon = Tabs.Main:AddLeftTabbox('hello') 
+local Pumpkin = Tabs.Main2:AddLeftTabbox('hello') 
 
 local Gun1 = Gunslinger:AddTab('Gunslinger')
 local Gun2 = Gunslinger:AddTab('Settings')
@@ -97,6 +100,12 @@ local Arch2 = Archer:AddTab('Settings')
 
 local Danc1 = Dancer:AddTab('Dancer')
 local Danc2 = Dancer:AddTab('Settings')
+
+local Dem1 = Demon:AddTab('Demon')
+local Dem2 = Demon:AddTab('Settings')
+
+local Pump1 = Pumpkin:AddTab('Pumpkin')
+local Pump2 = Pumpkin:AddTab('Settings')
 
 local GunEnable = Gun1:AddButton('Enable', function()
     GunENE = true
@@ -920,6 +929,377 @@ Options.DancFollowS:OnChanged(function()
     DancFollowSR = Options.DancFollowS.Value
 end)
 
+local DemEnable = Dem1:AddButton('Enable', function()
+    DemENE = true
+    spawn(function()
+        while DemENE do
+            if DemENE and DemLMBE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(DemLMBR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            h(v)
+                            local VirtualInputManager = game:GetService("VirtualInputManager")
+                            VirtualInputManager:SendMouseButtonEvent(XPoint, YPoint, 0, true, game, 0)
+                            VirtualInputManager:SendMouseButtonEvent(XPoint, YPoint, 0, false, game, 0)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function()
+        while DemENE do
+            if DemQE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(DemQSR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            h(v)
+                            keypress(0x51) --Q
+                            keyrelease(0x51)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function()
+        while DemENE do
+            if DemEE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(DemESR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            h(v)
+                            keypress(0x45) --E
+                            keyrelease(0x45)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function()
+        while DemENE do
+            if DemFE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(DemFSR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            h(v)
+                            local crit = game.Workspace[LocalPlayer.name].Stats.Critical
+                            if crit.Value == 100 then
+                                keypress(0x46)
+                            end
+                            keyrelease(0x46)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+end)
+
+local DemDisable = DemEnable:AddButton('Disable', function()
+    DemENE = false
+end)
+DemEnable:AddTooltip('Activates Demon auto attack')
+DemDisable:AddTooltip('Deactivates Demon auto attack')
+
+Dem1:AddToggle('DemLMB', {
+    Text = 'Auto LMB',
+    Default = true, -- Default value (true / false)
+    Tooltip = 'Automatically uses LMB', -- Information shown when you hover over the toggle
+})
+
+Toggles.DemLMB:OnChanged(function()
+    DemLMBE = Toggles.DemLMB.Value
+end)
+
+Dem1:AddToggle('DemQ', {
+    Text = 'Auto Q',
+    Default = true, -- Default value (true / false)
+    Tooltip = 'Automatically uses Q skill', -- Information shown when you hover over the toggle
+})
+
+Toggles.DemQ:OnChanged(function()
+    DemQE = Toggles.DemQ.Value
+end)
+
+Dem1:AddToggle('DemE', {
+    Text = 'Auto E',
+    Default = true, -- Default value (true / false)
+    Tooltip = 'Automatically uses E skill', -- Information shown when you hover over the toggle
+})
+
+Toggles.DemE:OnChanged(function()
+    DemEE = Toggles.DemE.Value
+end)
+
+Dem1:AddToggle('DemF', {
+    Text = 'Auto F',
+    Default = false, -- Default value (true / false)
+    Tooltip = 'Automatically uses F skill', -- Information shown when you hover over the toggle
+})
+
+Toggles.DemF:OnChanged(function()
+    DemFE = Toggles.DemF.Value
+end)
+
+Dem2:AddSlider('DemLMBS', {
+    Text = 'LMB range',
+    Default = 5,
+    Min = 1,
+    Max = 10,
+    Rounding = 0,
+
+    Compact = false, -- If set to true, then it will hide the label
+})
+
+Options.DemLMBS:OnChanged(function()
+    DemLMBR = Options.DemLMBS.Value
+end)
+
+Dem2:AddSlider('DemQS', {
+    Text = 'Q skill range',
+    Default = 25,
+    Min = 1,
+    Max = 50,
+    Rounding = 0,
+
+    Compact = false, -- If set to true, then it will hide the label
+})
+
+Options.DemQS:OnChanged(function()
+    DemQSR = Options.DemQS.Value
+end)
+
+Dem2:AddSlider('DemES', {
+    Text = 'E skill range',
+    Default = 30,
+    Min = 0,
+    Max = 30,
+    Rounding = 0,
+
+    Compact = false, -- If set to true, then it will hide the label
+})
+
+Options.DemES:OnChanged(function()
+    DemESR = Options.DemES.Value
+end)
+
+Dem2:AddSlider('DemFS', {
+    Text = 'F skill range',
+    Default = 25,
+    Min = 1,
+    Max = 100,
+    Rounding = 1,
+
+    Compact = false, 
+})
+
+Options.DemFS:OnChanged(function()
+    DemFSR = Options.DemFS.Value
+end)
+
+local PumpEnable = Pump1:AddButton('Enable', function()
+    PumpENE = true
+    spawn(function()
+        while PumpENE do
+            if PumpENE and PumpLMBE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(PumpLMBR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            stare(v)
+                            local VirtualInputManager = game:GetService("VirtualInputManager")
+                            VirtualInputManager:SendMouseButtonEvent(XPoint, YPoint, 0, true, game, 0)
+                            VirtualInputManager:SendMouseButtonEvent(XPoint, YPoint, 0, false, game, 0)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function()
+        while PumpENE do
+            if PumpQE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(PumpQSR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            stare(v)
+                            keypress(0x51) --Q
+                            keyrelease(0x51)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function()
+        while PumpENE do
+            if PumpEE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(PumpESR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            stare(v)
+                            keypress(0x45) --E
+                            keyrelease(0x45)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+    spawn(function()
+        while PumpENE do
+            if PumpFE then
+                for i,v in pairs(game.Players:GetPlayers()) do
+                    if v ~= player and pcall(function() return v.Character.HumanoidRootPart end) and player:DistanceFromCharacter(v.Character.HumanoidRootPart.Position) < tonumber(PumpFSR) then
+                        if pcall(function() return v.Character.Part,player.Character.Part end) and v.Character.Part.Color ~= player.Character.Part.Color or not player.Character:FindFirstChild("Part") then
+                            hmrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+                            stare(v)
+                            local crit = game.Workspace[LocalPlayer.name].Stats.Critical
+                            if crit.Value == 100 then
+                                keypress(0x46)
+                            end
+                            keyrelease(0x46)
+                            wait()
+                        end
+                    end
+                end
+            end
+            wait()
+        end
+    end)
+
+end)
+
+local PumpDisable = PumpEnable:AddButton('Disable', function()
+    PumpENE = false
+end)
+PumpEnable:AddTooltip('Activates Pumpkin auto attack')
+PumpDisable:AddTooltip('Deactivates Pumpkin auto attack')
+
+Pump1:AddToggle('PumpLMB', {
+    Text = 'Auto LMB',
+    Default = true, -- Default value (true / false)
+    Tooltip = 'Automatically uses LMB', -- Information shown when you hover over the toggle
+})
+
+Toggles.PumpLMB:OnChanged(function()
+    PumpLMBE = Toggles.PumpLMB.Value
+end)
+
+Pump1:AddToggle('PumpQ', {
+    Text = 'Auto Q',
+    Default = true, -- Default value (true / false)
+    Tooltip = 'Automatically uses Q skill', -- Information shown when you hover over the toggle
+})
+
+Toggles.PumpQ:OnChanged(function()
+    PumpQE = Toggles.PumpQ.Value
+end)
+
+Pump1:AddToggle('PumpE', {
+    Text = 'Auto E',
+    Default = false, -- Default value (true / false)
+    Tooltip = 'Automatically uses E skill', -- Information shown when you hover over the toggle
+})
+
+Toggles.PumpE:OnChanged(function()
+    PumpEE = Toggles.PumpE.Value
+end)
+
+Pump1:AddToggle('PumpF', {
+    Text = 'Auto F',
+    Default = true, -- Default value (true / false)
+    Tooltip = 'Automatically uses F skill', -- Information shown when you hover over the toggle
+})
+
+Toggles.PumpF:OnChanged(function()
+    PumpFE = Toggles.PumpF.Value
+end)
+
+Pump2:AddSlider('PumpLMBS', {
+    Text = 'LMB range',
+    Default = 20,
+    Min = 1,
+    Max = 50,
+    Rounding = 0,
+
+    Compact = false, -- If set to true, then it will hide the label
+})
+
+Options.PumpLMBS:OnChanged(function()
+    PumpLMBR = Options.PumpLMBS.Value
+end)
+
+Pump2:AddSlider('PumpQS', {
+    Text = 'Q skill range',
+    Default = 10,
+    Min = 1,
+    Max = 10,
+    Rounding = 0,
+
+    Compact = false, -- If set to true, then it will hide the label
+})
+
+Options.PumpQS:OnChanged(function()
+    PumpQSR = Options.PumpQS.Value
+end)
+
+Pump2:AddSlider('PumpES', {
+    Text = 'E skill range',
+    Default = 15,
+    Min = 0,
+    Max = 20,
+    Rounding = 0,
+
+    Compact = false, -- If set to true, then it will hide the label
+})
+
+Options.PumpES:OnChanged(function()
+    PumpESR = Options.PumpES.Value
+end)
+
+Pump2:AddSlider('PumpFS', {
+    Text = 'F skill range',
+    Default = 25,
+    Min = 1,
+    Max = 50,
+    Rounding = 1,
+
+    Compact = false, 
+})
+
+Options.PumpFS:OnChanged(function()
+    PumpFSR = Options.PumpFS.Value
+end)
 
 -- UI Settings
 local MenuGroup = Tabs['UI Settings']:AddLeftGroupbox('Menu')
