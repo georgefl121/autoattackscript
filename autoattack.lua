@@ -5,10 +5,15 @@ local XPoint = workspace.CurrentCamera.ViewportSize.X / 2
 local YPoint = workspace.CurrentCamera.ViewportSize.Y / 2
 Players = game:GetService("Players")
 RunService = game:GetService("RunService")
-
 function stare(name)
     if stareLoop then
         stareLoop:Disconnect()
+    end
+    if game:GetService("Workspace")[LocalPlayer.Name].Humanoid:FindFirstChild("Pin") or game:GetService("Workspace")[LocalPlayer.Name].Humanoid:FindFirstChild("Stun") then
+        if stareLoop then
+            stareLoop:Disconnect()
+        end
+        return
     end
     if not Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and name.Character:FindFirstChild("HumanoidRootPart") then return end
     local function stareFunc()
@@ -22,8 +27,17 @@ function stare(name)
             stareLoop:Disconnect()
         end
     end
+    
     stareLoop = RunService.RenderStepped:Connect(stareFunc)
 end
+
+-- spawn(function()
+--     while wait() do
+--         if game:GetService("Workspace")[LocalPlayer.Name].Humanoid:FindFirstChild("Pin") or game:GetService("Workspace")[LocalPlayer.Name].Humanoid:FindFirstChild("Stun") then
+--             stareLoop:Disconnect()
+--         end
+--     end
+-- end)
 
 function stare2(name,duration)
     spawn(function()
