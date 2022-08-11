@@ -31,13 +31,15 @@ function stare(name)
     stareLoop = RunService.RenderStepped:Connect(stareFunc)
 end
 
--- spawn(function()
---     while wait() do
---         if game:GetService("Workspace")[LocalPlayer.Name].Humanoid:FindFirstChild("Pin") or game:GetService("Workspace")[LocalPlayer.Name].Humanoid:FindFirstChild("Stun") then
---             stareLoop:Disconnect()
---         end
---     end
--- end)
+spawn(function()
+    while wait() do
+        if game:GetService("Workspace")[LocalPlayer.Name].Humanoid:FindFirstChild("Pin") or game:GetService("Workspace")[LocalPlayer.Name].Humanoid:FindFirstChild("Stun") then
+            if stareLoop then
+                stareLoop:Disconnect()
+            end
+        end
+    end
+end)
 
 function stare2(name,duration)
     spawn(function()
